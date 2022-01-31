@@ -3,7 +3,6 @@ import {
   dataURItoBlob,
   ISize,
   resizeImage,
-  ResizeType,
   resizeWithRatio,
   toImage,
 } from '@beenotung/tslib/image'
@@ -49,14 +48,14 @@ async function takeInput() {
     size = resizeWithRatio(
       { width: W, height: H },
       { width: rect.width, height: rect.height / 2 },
-      ResizeType.with_in,
+      'with_in',
     )
   } else {
     outputs.classList.remove('v')
     size = resizeWithRatio(
       { width: W, height: H },
       { width: rect.width / 2, height: rect.height },
-      ResizeType.with_in,
+      'with_in',
     )
   }
   originalSize.textContent = `${W}x${H} (${format_byte(file.size)})`
