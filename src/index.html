@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Editor</title>
+    <style>
+      body {
+        margin: 0.5em;
+        overflow: hidden;
+      }
+      #inputs {
+        height: 4em;
+      }
+      #outputs {
+        height: calc(var(--vh, 1vh) * 100 - 1em - 4em);
+        width: calc(100vw - 1em);
+        display: flex;
+      }
+      #outputs > div {
+        width: 100%;
+        height: 100%;
+      }
+      #outputs.v {
+        flex-direction: column;
+      }
+      #outputs.v > div {
+        height: 50%;
+      }
+      img {
+        background-color: skyblue;
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+      }
+      .margin-end {
+        display: inline;
+        margin-inline-end: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <form id="inputs">
+        <input type="file" class="source" accept="image/*" />
+        <div class="margin-end">
+          <span>mode:</span>
+          <label class="margin-end">
+            <input type="radio" name="imageMode" value="smooth" />
+            smooth
+          </label>
+          <label>
+            <input type="radio" name="imageMode" value="pixelated" />
+            pixelated
+          </label>
+        </div>
+        <label class="margin-end">
+          original size: <span class="original size"></span>
+        </label>
+        <label> output size: <span class="output size"></span> </label>
+        <br />
+        <label>
+          size:
+          <input name="size" type="number" min="1" max="100" step="0.1" />
+          <input name="size" type="range" min="1" max="100" step="0.1" />
+        </label>
+        <label>
+          quality:
+          <input name="quality" type="number" min="1" max="100" step="0.1" />
+          <input name="quality" type="range" min="1" max="100" step="0.1" />
+        </label>
+      </form>
+      <div id="outputs">
+        <div>
+          <img class="fixed-size" />
+        </div>
+        <div>
+          <img class="scaled" />
+        </div>
+      </div>
+    </main>
+    <script type="module" src="editor.js"></script>
+  </body>
+</html>
