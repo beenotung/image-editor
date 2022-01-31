@@ -5,7 +5,7 @@
 module.exports = {
   mount: {
     /* ... */
-    'src': '/'
+    src: '/',
   },
   plugins: [
     /* ... */
@@ -19,4 +19,9 @@ module.exports = {
   buildOptions: {
     /* ... */
   },
-};
+  optimize: {
+    /* ... */
+    treeshake: true,
+    target: 'es2018',
+  },
+}
