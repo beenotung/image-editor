@@ -1,7 +1,7 @@
 {
   "name": "image-editor",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple web-based editor to reduce image size",
   "main": "index.js",
   "scripts": {
     "start": "snowpack dev",
@@ -9,11 +9,7 @@
     "upload": "surge build https://image_editor.surge.sh"
   },
   "keywords": [],
-  "author": {
-    "name": "Beeno Tung",
-    "email": "aabbcc1241@yahoo.com.hk",
-    "url": "https://beeno-tung.surge.sh"
-  },
+  "author": "Beeno Tung <aabbcc1241@yahoo.com.hk> (https://beeno-tung.surge.sh)",
   "license": "BSD-2-Clause",
   "dependencies": {
     "@beenotung/tslib": "^18.0.0",
@@ -22,5 +18,13 @@
   "devDependencies": {
     "snowpack": "^3.8.8",
     "typescript": "^4.5.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beenotung/image-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/beenotung/image-editor/issues"
+  },
+  "homepage": "https://github.com/beenotung/image-editor#readme"
 }
