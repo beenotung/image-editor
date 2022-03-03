@@ -34,8 +34,16 @@
         height: auto;
       }
       .margin-end {
-        display: inline;
+        display: inline-block;
         margin-inline-end: 1em;
+      }
+      .mode-container {
+        display: inline-block;
+        background-color: #ddd;
+        text-align: end;
+      }
+      label {
+        display: inline-block;
       }
     </style>
   </head>
@@ -43,7 +51,7 @@
     <main>
       <form id="inputs">
         <input type="file" class="source" accept="image/*" />
-        <div class="margin-end">
+        <div class="margin-end mode-container">
           <span>mode:</span>
           <label class="margin-end">
             <input type="radio" name="imageMode" value="smooth" />
