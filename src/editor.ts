@@ -105,7 +105,6 @@ form.addEventListener('submit', e => {
 })
 form.addEventListener('change', e => {
   let input = e.target as HTMLInputElement
-  console.log(input.name)
   if (input.name == 'imageMode') {
     mode = input.value
     scaled.style.imageRendering = mode
