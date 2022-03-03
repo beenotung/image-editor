@@ -9,12 +9,10 @@
       body {
         margin: 0.5em;
         overflow: hidden;
-      }
-      #inputs {
-        height: 4em;
+        --inputs-height: 4em;
       }
       #outputs {
-        height: calc(var(--vh, 1vh) * 100 - 1em - 4em);
+        height: calc(var(--vh, 1vh) * 100 - 1em - var(--inputs-height));
         width: calc(100vw - 1em);
         display: flex;
       }

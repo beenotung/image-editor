@@ -9,20 +9,29 @@ import {
 
 let { round } = Math
 
-let vh = window.innerHeight * 0.01
-document.documentElement.style.setProperty('--vh', vh + 'px')
-window.addEventListener('resize', () => {
-  vh = window.innerHeight * 0.01
-  document.documentElement.style.setProperty('--vh', vh + 'px')
-})
-
 let form = document.querySelector('#inputs') as HTMLFormElement
 let input = document.querySelector('input.source') as HTMLInputElement
 let originalSize = document.querySelector('.original.size') as HTMLSpanElement
 let outputSize = document.querySelector('.output.size') as HTMLSpanElement
+let inputs = document.querySelector('#inputs') as HTMLDivElement
 let outputs = document.querySelector('#outputs') as HTMLDivElement
 let scaled = document.querySelector('img.scaled') as HTMLImageElement
 let fixedSize = document.querySelector('img.fixed-size') as HTMLImageElement
+
+let vh = window.innerHeight * 0.01
+document.documentElement.style.setProperty('--vh', vh + 'px')
+document.body.style.setProperty(
+  '--inputs-height',
+  inputs.getBoundingClientRect().height + 'px',
+)
+window.addEventListener('resize', () => {
+  vh = window.innerHeight * 0.01
+  document.documentElement.style.setProperty('--vh', vh + 'px')
+  document.body.style.setProperty(
+    '--inputs-height',
+    inputs.getBoundingClientRect().height + 'px',
+  )
+})
 
 let sourceImage: HTMLImageElement
 let mode = 'smooth'
