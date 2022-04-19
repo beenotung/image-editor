@@ -10,7 +10,12 @@ import {
 let { round } = Math
 
 let form = document.querySelector('#inputs') as HTMLFormElement
-let input = document.querySelector('input.source') as HTMLInputElement
+let urlInput = document.querySelector(
+  'input.source[type="url"]',
+) as HTMLInputElement
+let fileInput = document.querySelector(
+  'input.source[type="file"]',
+) as HTMLInputElement
 let originalSize = document.querySelector('.original.size') as HTMLSpanElement
 let outputSize = document.querySelector('.output.size') as HTMLSpanElement
 let inputs = document.querySelector('#inputs') as HTMLDivElement
@@ -38,10 +43,28 @@ let quality = 100
 let W = 1
 let H = 1
 
-input.addEventListener('change', takeInput)
-window.addEventListener('resize', takeInput)
-async function takeInput() {
-  let file = input.files?.[0]
+let file: File | undefined
+urlInput.addEventListener('change', async () => {
+  let url = urlInput.value.trim()
+  if (!url) return
+  try {
+    let res = await fetch('https://images.weserv.nl/?url=' + url)
+    let blob = await res.blob()
+    let ext = blob.type.split('/').pop()
+    file = new File([blob], 'image.' + ext)
+    drawImage()
+  } catch (error) {
+    console.error(error)
+    alert(String(error))
+  }
+})
+fileInput.addEventListener('change', () => {
+  file = fileInput.files?.[0]
+  drawImage()
+})
+window.addEventListener('resize', drawImage)
+
+async function drawImage() {
   if (!file) return
   originalSize.textContent = `(${format_byte(file.size)})`
   sourceImage = await toImage(file)
