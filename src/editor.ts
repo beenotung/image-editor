@@ -47,16 +47,20 @@ let file: File | undefined
 urlInput.addEventListener('change', async () => {
   let url = urlInput.value.trim()
   if (!url) return
-  try {
-    let res = await fetch('https://images.weserv.nl/?url=' + url)
-    let blob = await res.blob()
-    let ext = blob.type.split('/').pop()
-    file = new File([blob], 'image.' + ext)
-    drawImage()
-  } catch (error) {
-    console.error(error)
-    alert(String(error))
-  }
+  fetch(url)
+    .then(res => res.blob())
+    .catch(() =>
+      fetch('https://images.weserv.nl/?url=' + url).then(res => res.blob()),
+    )
+    .then(blob => {
+      let ext = blob.type.split('/').pop()
+      file = new File([blob], 'image.' + ext)
+      drawImage()
+    })
+    .catch(error => {
+      console.error(error)
+      alert(String(error))
+    })
 })
 fileInput.addEventListener('change', () => {
   file = fileInput.files?.[0]
