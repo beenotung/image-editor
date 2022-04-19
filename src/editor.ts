@@ -18,20 +18,17 @@ let outputs = document.querySelector('#outputs') as HTMLDivElement
 let scaled = document.querySelector('img.scaled') as HTMLImageElement
 let fixedSize = document.querySelector('img.fixed-size') as HTMLImageElement
 
-let vh = window.innerHeight * 0.01
-document.documentElement.style.setProperty('--vh', vh + 'px')
-document.body.style.setProperty(
-  '--inputs-height',
-  inputs.getBoundingClientRect().height + 'px',
-)
-window.addEventListener('resize', () => {
+let vh = 0
+function checkInputSize() {
   vh = window.innerHeight * 0.01
   document.documentElement.style.setProperty('--vh', vh + 'px')
   document.body.style.setProperty(
     '--inputs-height',
     inputs.getBoundingClientRect().height + 'px',
   )
-})
+}
+checkInputSize()
+window.addEventListener('resize', checkInputSize)
 
 let sourceImage: HTMLImageElement
 let mode = 'smooth'
