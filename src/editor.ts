@@ -96,10 +96,12 @@ async function drawImage() {
   fixedSize.style.height = size.height + 'px'
   draw()
 }
+let formatSelect = document.querySelector<HTMLSelectElement>('[name="format"]')!
 let sizeInputs = document.querySelectorAll<HTMLInputElement>('[name="size"]')
 let qualityInputs =
   document.querySelectorAll<HTMLInputElement>('[name="quality"]')
 
+formatSelect.addEventListener('change', draw)
 sizeInputs.forEach(input => {
   input.value = size.toString()
   input.addEventListener('input', () => {
@@ -141,7 +143,13 @@ function draw() {
   if (!sourceImage) return
   let w = round((W * size) / 100)
   let h = round((H * size) / 100)
-  let dataUrl = resizeImage(sourceImage, w, h, 'image/jpeg', quality / 100)
+  let dataUrl = resizeImage(
+    sourceImage,
+    w,
+    h,
+    'image/' + formatSelect.value,
+    quality / 100,
+  )
   let blob = dataURItoBlob(dataUrl)
   outputSize.textContent = `${w}x${h} (${format_byte(blob.size)})`
   scaled.src = dataUrl

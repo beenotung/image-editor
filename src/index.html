@@ -37,6 +37,9 @@
         display: inline-block;
         margin-inline-end: 1em;
       }
+      .format-container {
+        display: inline-block;
+      }
       .mode-container {
         display: inline-block;
         background-color: #ddd;
@@ -57,6 +60,14 @@
           accept="image/*"
           title="select local image file"
         />
+        <div class="format-container">
+          <span>format:</span>
+          <select name="format">
+            <option>webp</option>
+            <option>jpeg</option>
+            <option>png</option>
+          </select>
+        </div>
         <div class="margin-end mode-container">
           <span>mode:</span>
           <label class="margin-end">
