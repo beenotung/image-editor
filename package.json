@@ -12,8 +12,7 @@
   "author": "Beeno Tung <aabbcc1241@yahoo.com.hk> (https://beeno-tung.surge.sh)",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "@beenotung/tslib": "^18.0.0",
-    "ga-island": "^3.0.0"
+    "@beenotung/tslib": "^18.0.0"
   },
   "devDependencies": {
     "snowpack": "^3.8.8",
