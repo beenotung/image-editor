@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "snowpack": "^3.8.8",
+    "surge": "^0.23.1",
     "typescript": "^5.2.2"
   },
   "repository": {
