@@ -12,7 +12,7 @@
   "author": "Beeno Tung <aabbcc1241@yahoo.com.hk> (https://beeno-tung.surge.sh)",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "@beenotung/tslib": "^22.2.1"
+    "@beenotung/tslib": "^24.12.0"
   },
   "devDependencies": {
     "esbuild": "^0.25.8",
