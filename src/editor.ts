@@ -1,6 +1,7 @@
 import { format_byte } from '@beenotung/tslib/format'
 import {
   dataURItoBlob,
+  imageToCanvas,
   ISize,
   resizeImage,
   resizeWithRatio,
@@ -39,6 +40,9 @@ let sourceImage: HTMLImageElement
 let mode = 'smooth'
 let size = 100
 let quality = 80
+let row = 1
+let col = 1
+let gridColor = '#00ff00'
 
 let W = 1
 let H = 1
@@ -100,6 +104,10 @@ let formatSelect = document.querySelector<HTMLSelectElement>('[name="format"]')!
 let sizeInputs = document.querySelectorAll<HTMLInputElement>('[name="size"]')
 let qualityInputs =
   document.querySelectorAll<HTMLInputElement>('[name="quality"]')
+let rowInput = document.querySelector<HTMLInputElement>('[name="row"]')!
+let colInput = document.querySelector<HTMLInputElement>('[name="col"]')!
+let gridColorInput =
+  document.querySelector<HTMLInputElement>('[name="gridColor"]')!
 
 formatSelect.addEventListener('change', draw)
 sizeInputs.forEach(input => {
@@ -126,6 +134,21 @@ qualityInputs.forEach(input => {
     draw()
   })
 })
+rowInput.value = row.toString()
+rowInput.addEventListener('input', () => {
+  row = rowInput.valueAsNumber
+  draw()
+})
+colInput.value = col.toString()
+colInput.addEventListener('input', () => {
+  col = colInput.valueAsNumber
+  draw()
+})
+gridColorInput.value = gridColor
+gridColorInput.addEventListener('input', () => {
+  gridColor = gridColorInput.value
+  draw()
+})
 form.addEventListener('submit', e => {
   e.preventDefault()
 })
@@ -139,7 +162,7 @@ form.addEventListener('change', e => {
 })
 form.imageMode.value = mode
 
-function draw() {
+async function draw() {
   if (!sourceImage) return
   let w = round((W * size) / 100)
   let h = round((H * size) / 100)
@@ -147,15 +170,46 @@ function draw() {
     sourceImage,
     w,
     h,
-    'image/' + formatSelect.value,
-    quality / 100,
+    // 'image/' + formatSelect.value,
+    // quality / 100,
   )
+  dataUrl = await drawGrid(dataUrl)
   let blob = dataURItoBlob(dataUrl)
   outputSize.textContent = `${w}x${h} (${format_byte(blob.size)})`
   scaled.src = dataUrl
   scaled.width = w
   scaled.height = h
   fixedSize.src = dataUrl
+}
+
+async function drawGrid(dataUrl: string): Promise<string> {
+  // if (row == 1 && col == 1) return dataUrl
+  let image = new Image()
+  await new Promise(resolve => {
+    image.onload = resolve
+    image.src = dataUrl
+  })
+  let canvas = document.createElement('canvas')
+  canvas.width = image.naturalWidth
+  canvas.height = image.naturalHeight
+  let context = canvas.getContext('2d')!
+  context.drawImage(image, 0, 0)
+  context.fillStyle = gridColor
+  let xStep = Math.round(image.naturalWidth / col)
+  let yStep = Math.round(image.naturalHeight / row)
+  console.log({
+    xStep,
+    yStep,
+    width: image.naturalWidth,
+    height: image.naturalHeight,
+  })
+  for (let y = yStep; y < image.naturalHeight; y += yStep) {
+    context.fillRect(0, y, image.naturalWidth, 1)
+  }
+  for (let x = xStep; x < image.naturalWidth; x += xStep) {
+    context.fillRect(x, 0, 1, image.naturalHeight)
+  }
+  return canvas.toDataURL('image/' + formatSelect.value, quality / 100)
 }
 
 if (location.origin.includes('127.0.0.1')) {
