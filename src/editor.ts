@@ -38,7 +38,7 @@ window.addEventListener('resize', checkInputSize)
 let sourceImage: HTMLImageElement
 let mode = 'smooth'
 let size = 100
-let quality = 100
+let quality = 80
 
 let W = 1
 let H = 1
