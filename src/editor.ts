@@ -157,3 +157,8 @@ function draw() {
   scaled.height = h
   fixedSize.src = dataUrl
 }
+
+if (location.origin.includes('127.0.0.1')) {
+  file = fileInput.files?.[0]
+  drawImage()
+}
