@@ -4,8 +4,8 @@
   "description": "A simple web-based editor to reduce image size",
   "main": "index.js",
   "scripts": {
-    "start": "snowpack dev",
-    "build": "snowpack build",
+    "start": "npm run build -- --watch",
+    "build": "esbuild src/editor.ts --bundle --outfile=build/editor.js",
     "upload": "surge build https://image_editor.surge.sh"
   },
   "keywords": [],
@@ -15,7 +15,7 @@
     "@beenotung/tslib": "^22.2.1"
   },
   "devDependencies": {
-    "snowpack": "^3.8.8",
+    "esbuild": "^0.25.8",
     "surge": "^0.23.1",
     "typescript": "^5.2.2"
   },
