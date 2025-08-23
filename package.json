@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build -- --watch",
-    "build": "esbuild src/editor.ts --bundle --outfile=build/editor.js",
+    "build": "esbuild src/editor.ts --bundle --outfile=build/editor.js && cp src/index.html build/index.html",
     "upload": "surge build https://image_editor.surge.sh"
   },
   "keywords": [],
