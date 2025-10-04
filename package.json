@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build -- --watch",
-    "build": "esbuild src/editor.ts --bundle --outfile=build/editor.js && cp src/index.html build/index.html",
-    "upload": "surge build https://image_editor.surge.sh"
+    "build": "esbuild src/editor.ts --bundle --outfile=src/editor.js",
+    "upload": "surge src https://image_editor.surge.sh"
   },
   "keywords": [],
   "author": "Beeno Tung <aabbcc1241@yahoo.com.hk> (https://beeno-tung.surge.sh)",
