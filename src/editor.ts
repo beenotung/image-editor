@@ -23,6 +23,12 @@ let inputs = document.querySelector('#inputs') as HTMLDivElement
 let outputs = document.querySelector('#outputs') as HTMLDivElement
 let scaled = document.querySelector('img.scaled') as HTMLImageElement
 let fixedSize = document.querySelector('img.fixed-size') as HTMLImageElement
+let gridMode_rowcol = document.querySelector(
+  '[name="gridMode"][value="rowcol"]',
+) as HTMLInputElement
+let gridMode_fixed = document.querySelector(
+  '[name="gridMode"][value="fixed"]',
+) as HTMLInputElement
 
 let vh = 0
 function checkInputSize() {
@@ -40,8 +46,11 @@ let sourceImage: HTMLImageElement
 let mode = 'smooth'
 let size = 100
 let quality = 80
+let gridMode: 'rowcol' | 'fixed' = 'rowcol'
 let row = 1
 let col = 1
+let gridWidth = 32
+let gridHeight = 32
 let gridColor = '#00ff00'
 
 let W = 1
@@ -108,6 +117,13 @@ let rowInput = document.querySelector<HTMLInputElement>('[name="row"]')!
 let colInput = document.querySelector<HTMLInputElement>('[name="col"]')!
 let gridColorInput =
   document.querySelector<HTMLInputElement>('[name="gridColor"]')!
+let gridWidthInput =
+  document.querySelector<HTMLInputElement>('[name="gridWidth"]')!
+let gridHeightInput = document.querySelector<HTMLInputElement>(
+  '[name="gridHeight"]',
+)!
+let rowcolInputs = document.querySelector<HTMLDivElement>('#rowcol-inputs')!
+let pixelInputs = document.querySelector<HTMLDivElement>('#pixel-inputs')!
 
 formatSelect.addEventListener('change', draw)
 sizeInputs.forEach(input => {
@@ -149,6 +165,19 @@ gridColorInput.addEventListener('input', () => {
   gridColor = gridColorInput.value
   draw()
 })
+
+// Initialize pixel size inputs
+gridWidthInput.value = gridWidth.toString()
+gridHeightInput.value = gridHeight.toString()
+
+gridWidthInput.addEventListener('input', () => {
+  gridWidth = gridWidthInput.valueAsNumber
+  draw()
+})
+gridHeightInput.addEventListener('input', () => {
+  gridHeight = gridHeightInput.valueAsNumber
+  draw()
+})
 form.addEventListener('submit', e => {
   e.preventDefault()
 })
@@ -158,9 +187,15 @@ form.addEventListener('change', e => {
     mode = input.value
     scaled.style.imageRendering = mode
     fixedSize.style.imageRendering = mode
+  } else if (input.name == 'gridMode') {
+    gridMode = input.value as 'rowcol' | 'fixed'
+    rowcolInputs.hidden = gridMode === 'fixed'
+    pixelInputs.hidden = gridMode === 'rowcol'
+    draw()
   }
 })
 form.imageMode.value = mode
+gridMode_rowcol.checked = true
 
 async function draw() {
   if (!sourceImage) return
@@ -195,20 +230,37 @@ async function drawGrid(dataUrl: string): Promise<string> {
   let context = canvas.getContext('2d')!
   context.drawImage(image, 0, 0)
   context.fillStyle = gridColor
-  let xStep = Math.round(image.naturalWidth / col)
-  let yStep = Math.round(image.naturalHeight / row)
+
+  let xStep: number, yStep: number
+
+  if (gridMode === 'fixed') {
+    // Fixed size mode
+    xStep = gridWidth
+    yStep = gridHeight
+  } else {
+    // Row/column mode (original behavior)
+    xStep = Math.round(image.naturalWidth / col)
+    yStep = Math.round(image.naturalHeight / row)
+  }
+
   console.log({
+    gridMode,
     xStep,
     yStep,
     width: image.naturalWidth,
     height: image.naturalHeight,
   })
+
+  // Draw horizontal grid lines
   for (let y = yStep; y < image.naturalHeight; y += yStep) {
     context.fillRect(0, y, image.naturalWidth, 1)
   }
+
+  // Draw vertical grid lines
   for (let x = xStep; x < image.naturalWidth; x += xStep) {
     context.fillRect(x, 0, 1, image.naturalHeight)
   }
+
   return canvas.toDataURL('image/' + formatSelect.value, quality / 100)
 }
 

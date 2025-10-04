@@ -48,6 +48,13 @@
       label {
         display: inline-block;
       }
+      #pixel-inputs,
+      #rowcol-inputs {
+        display: inline;
+      }
+      [hidden] {
+        display: none !important;
+      }
     </style>
   </head>
   <body>
@@ -94,12 +101,41 @@
           <input name="quality" type="number" min="1" max="100" step="0.1" />
           <input name="quality" type="range" min="1" max="100" step="0.1" />
         </label>
-        <label>
-          row: <input name="row" type="number" min="1" max="100" step="1" />
-        </label>
-        <label>
-          col: <input name="col" type="number" min="1" max="100" step="1" />
-        </label>
+        <div class="margin-end mode-container">
+          <span>grid mode:</span>
+          <label class="margin-end">
+            <input type="radio" name="gridMode" value="rowcol" />
+            row/col
+          </label>
+          <label>
+            <input type="radio" name="gridMode" value="fixed" />
+            fixed size
+          </label>
+        </div>
+        <div id="rowcol-inputs">
+          <label>
+            row: <input name="row" type="number" min="1" max="100" step="1" />
+          </label>
+          <label>
+            col: <input name="col" type="number" min="1" max="100" step="1" />
+          </label>
+        </div>
+        <div id="pixel-inputs" hidden>
+          <label>
+            width:
+            <input name="gridWidth" type="number" min="1" max="9999" step="1" />
+          </label>
+          <label>
+            height:
+            <input
+              name="gridHeight"
+              type="number"
+              min="1"
+              max="9999"
+              step="1"
+            />
+          </label>
+        </div>
         <label>grid color: <input name="gridColor" type="color" /></label>
       </form>
       <div id="outputs">
